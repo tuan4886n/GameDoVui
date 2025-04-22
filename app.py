@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import requests
 from config.database import connect_db
 from routes.auth import auth_bp
+from routes.score import score_bp
 
 
 app = Flask(__name__)
@@ -55,6 +56,8 @@ def get_quiz():
     extreme_questions = hard_questions[:5]
 
     return jsonify({"quiz": easy_questions + medium_questions + hard_questions + extreme_questions})
+
+app.register_blueprint(score_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)
