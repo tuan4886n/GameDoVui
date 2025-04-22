@@ -20,3 +20,17 @@ def submit_score():
     conn.commit()
 
     return jsonify({"status": "✅ Điểm đã được lưu!", "username": username, "score": score})
+
+
+@score_bp.route("/leaderboard", methods=["GET"])
+def leaderboard():
+    conn, cursor = connect_db()
+    if not conn:
+        return jsonify({"status": "❌ Lỗi kết nối database!"})
+
+    cursor.execute("SELECT username, score, timestamp FROM scores ORDER BY score DESC, timestamp ASC LIMIT 10;")
+    top_layers = cursor.fetchall()
+
+    leaderboard_data = [{"username": row[0], "score": row[1], "timestamp": row[2].strftime('%Y-%m-%d %H:%M:%S')} for row in top_layers]
+
+    return jsonify({"leaderboard": leaderboard_data})
