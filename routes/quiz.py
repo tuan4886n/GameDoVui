@@ -3,18 +3,18 @@ import requests
 
 quiz_bp = Blueprint("quiz", __name__)
 
-def fetch_all_questions():
-    url = "https://opentdb.com/api.php?amount=20&type=multiple"
+def fetch_questions_by_difficulty(difficulty, amount=5):
+    url = f"https://the-trivia-api.com/api/questions?limit={amount}&difficulty={difficulty}"
+    print(f"Requesting URL: {url}")
     
     try:
         response = requests.get(url, timeout=3)
         data = response.json()
-        print("API Response:", data)
         
-        if response.status_code == 200 and "results" in data and len(data["results"]) > 0:
-            return data["results"]
+        if response.status_code == 200 and isinstance(data, list) and len(data) > 0:
+            return data
         else:
-            print("Error: API returned empty results")
+            print(f"Error: API returned empty results for {difficulty}")
             return []
     
     except requests.exceptions.RequestException as e:
@@ -23,18 +23,8 @@ def fetch_all_questions():
 
 @quiz_bp.route("/quiz", methods=["GET"])
 def get_quiz():
-    questions = fetch_all_questions()
+    easy_questions = fetch_questions_by_difficulty("easy", 5)
+    medium_questions = fetch_questions_by_difficulty("medium", 5)
+    hard_questions = fetch_questions_by_difficulty("hard", 5)
 
-    # Retry if API returns empty results
-    retry_attempts = 3
-    while len(questions) < 20 and retry_attempts > 0:
-        print("Retrying API request...")
-        questions = fetch_all_questions()
-        retry_attempts -= 1
-
-    easy_questions = [q for q in questions if q["difficulty"] == "easy"][:5]
-    medium_questions = [q for q in questions if q["difficulty"] == "medium"][:5]
-    hard_questions = [q for q in questions if q["difficulty"] == "hard"][:5]
-    extreme_questions = hard_questions[:5]
-
-    return jsonify({"quiz": easy_questions + medium_questions + hard_questions + extreme_questions})
+    return jsonify({"quiz": easy_questions + medium_questions + hard_questions})
