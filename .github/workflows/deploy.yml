@@ -1,0 +1,30 @@
+name: Flask CI/CD
+
+on:
+  push:
+    branches:
+      - main # Trigger pipeline when there is commit to the "main" branch
+  pull_request:
+    branches:
+      - main # Trigger pipeline when there is pull request to the "main" branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # Run ubuntu environment
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3 # Clone repo into runner
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9.6"
+
+      - name: Install dependencies # Install dependencies of app
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest tests # Run Pytest to checkout code
