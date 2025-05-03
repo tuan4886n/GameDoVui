@@ -34,10 +34,10 @@ jobs:
           npm install -g eslint htmlhint stylelint
 
       - name: Test JavaScript
-        run: eslint frontend/
+        run: eslint assets/js/
 
       - name: Test HTML
-        run: htmlhint frontend/*.html
+        run: htmlhint assets/*.html
 
       - name: Test CSS
-        run: stylelint frontend/*.css
+        run: stylelint assets/*.css
