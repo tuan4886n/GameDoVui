@@ -112,7 +112,7 @@ function handlePhoneAFriend() {
             const expertButton = document.createElement("button");
             expertButton.className = "expert-btn";
             expertButton.innerHTML = `
-                <img src="${expert.img || 'default-expert.png'}" alt="${expert.name}" class="expert-img">
+                <img src="${expert.img || "default-expert.png"}" alt="${expert.name}" class="expert-img">
                 <span>${expert.name}</span>
             `;
             expertButton.onclick = () => selectExpert(index, correctAnswer, answers);
@@ -264,20 +264,20 @@ function handleAudiencePoll() {
         audiencePollContainer.style.display = "block";
 
         // Make sure the canvas exists
-        const canvas = document.getElementById('audience-poll-chart');
-        const ctx = canvas.getContext('2d');
+        const canvas = document.getElementById("audience-poll-chart");
+        const ctx = canvas.getContext("2d");
         if (window.myChart) window.myChart.destroy(); // Xóa biểu đồ cũ nếu có
 
         // Create new chart with API data
         window.myChart = new Chart(ctx, {
-            type: 'bar',
+            type: "bar",
             data: {
                 labels: answers,
                 datasets: [{
-                    label: 'Tỷ lệ ý kiến khán giả (%)',
+                    label: "Tỷ lệ ý kiến khán giả (%)",
                     data: answers.map(answer => data.poll[answer] || 0),
-                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(54, 162, 235, 0.2)'],
-                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)', 'rgba(255, 206, 86, 1)', 'rgba(54, 162, 235, 1)'],
+                    backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(255, 206, 86, 0.2)", "rgba(54, 162, 235, 0.2)"],
+                    borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)", "rgba(255, 206, 86, 1)", "rgba(54, 162, 235, 1)"],
                     borderWidth: 1
                 }]
             },

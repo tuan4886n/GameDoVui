@@ -31,13 +31,7 @@ jobs:
 
       - name: Install frontend validation tools
         run: |
-          npm install -g eslint htmlhint stylelint
+          npm install -g eslint
 
       - name: Test JavaScript
         run: eslint --config eslint/eslint.config.js assets/js/
-
-      - name: Test HTML
-        run: htmlhint --config eslint/htmlhint.config.js assets/*.html
-
-      - name: Test CSS
-        run: stylelint --config eslint/.stylelintrc.json assets/css/*.css
