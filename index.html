@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Quiz</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/help_question.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <div class="auth-container">
+            <button id="logout-btn" onclick="localStorage.removeItem('currentUsername'); window.location.href='auth/login.html';">Đăng xuất</button>
+        </div>
+        <h1>Game Quiz</h1>
+        <!-- Hide input to save username -->
+        <input type="hidden" id="current-username" value="">
+
+        <!-- Restart button -->
+        <button id="start-game-btn" onclick="startGame()">Bắt đầu</button>
+        <p id="total_sessions">Lần chơi: 0</p>
+        
+        <div id="question-counter" style="margin-top: 20px; font-weight: bold;">
+            <p>Câu hỏi: <span id="current-question-number">1</span></p>
+        </div>
+
+        <!-- Question display area -->
+        <div id="game-area" class="question-container">
+            <p id="question-text">Câu hỏi sẽ hiển thị tại đây.</p>
+            <div id="answers-area" class="answers-container">
+                <!-- Các đáp án sẽ được tạo động từ JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Audience Suggestion Display Area -->
+        <div id="audience-poll-container" style="display: none; margin-top: 20px;">
+            <h3>Kết quả thăm dò ý kiến:</h3>
+            <canvas id="audience-poll-chart" width="400" height="200"></canvas>
+        </div>
+        
+        <!-- Area displaying selected experts and suggestions -->
+        <div id="expert-response-container" style="display: none; margin-top: 20px;">
+            <div class="expert-info">
+                <img id="expert-image" src="" alt="Expert Image" class="expert-img">
+                <p id="expert-name"></p>
+            </div>
+            <p id="expert-suggestion"></p>
+        </div>
+
+        <!-- Expert status display area -->
+        <div id="expert-status-container" style="display: none; margin-top: 20px;">
+            <div class="expert-info">
+                <img id="status-expert-image" src="" alt="Expert Reaction" class="expert-img">
+                <p id="status-expert-message"></p>
+            </div>
+        </div>
+
+        <!-- Help button area -->
+        <div id="hints-container" style="display: flex; justify-content: space-around; margin: 20px 0;">
+            <button id="hint-50-50" onclick="handle5050Hint()">50/50</button>
+            <button id="hint-phone" onclick="handlePhoneAFriend()">Gọi chuyên gia</button>
+            <button id="hint-audience" onclick="handleAudiencePoll()">Hỏi khán giả</button>
+            <button id="hint-skip" onclick="handleSwitchQuestion()">Đổi câu hỏi</button>
+        </div>
+
+        <!-- Area displaying list of experts -->
+        <div id="phone-a-friend-container" style="display: none; margin-top: 20px;">
+            <p>Chọn một chuyên gia để trợ giúp:</p>
+            <div id="experts-list" class="experts-container">
+                <!-- The list of experts will be added dynamically by JavaScript -->
+            </div>
+        </div>
+
+        <!-- score area -->
+        <div id="score-board">
+            <p id="current_score">Điểm hiện tại: 0</p>
+            <p id="highest_score">Điểm cao nhất: 0</p>
+        </div>
+        
+        <!-- Leaderboard area -->
+        <div id="leaderboard">
+            <h2>Bảng Xếp Hạng</h2>
+            <div id="leaderboard-list">
+                <p>Bảng xếp hạng sẽ hiển thị tại đây.</p>
+            </div>
+            <div id="pagination">
+                <!-- Pagination buttons will be generated dynamically -->
+            </div>
+        </div>
+
+        <!-- Game Over area -->
+        <div id="game-over" style="display: none;">
+            <div id="game-over-content">
+                <img src="assets/images/game_over.png" alt="Game Over" id="game-over-icon">
+                <p id="game-over-message"></p>
+                <button onclick="startGame()">Chơi lại</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

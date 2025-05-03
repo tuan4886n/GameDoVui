@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/auth.js"></script>
+</head>
+<body>
+    <div id="notification"></div>
+    <div id="auth-container">
+        <!-- Form Login -->
+        <div id="login">
+            <h2>Đăng nhập</h2>
+            <input type="text" id="login-username" placeholder="Nhập username">
+            <input type="password" id="login-password" placeholder="Nhập mật khẩu">
+            <button onclick="loginUser()">Đăng nhập</button>
+            <p class="redirect-message">
+                Bạn chưa có tài khoản? <a href="register.html">Đăng ký ngay</a>.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

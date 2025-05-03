@@ -28,3 +28,16 @@ jobs:
 
       - name: Run tests
         run: pytest tests # Run Pytest to checkout code
+
+      - name: Install frontend validation tools
+        run: |
+          npm install -g eslint htmlhint stylelint
+
+      - name: Test JavaScript
+        run: eslint frontend/
+
+      - name: Test HTML
+        run: htmlhint frontend/*.html
+
+      - name: Test CSS
+        run: stylelint frontend/*.css
