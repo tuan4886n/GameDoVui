@@ -9,11 +9,12 @@ from help_routes.audience import audience_bp
 from help_routes.switch_question import switch_question_bp
 from routes.start_game import game_bp
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 
 # Configure CORS to allow frontend access to API
-CORS(app, origins=["https://gamedovui.pages.dev"])
+CORS(app, origins=["*"], supports_credentials=True, allow_headers=["Content-Type"])
 
 @app.route("/test_db", methods=["GET"])
 def test_db():
@@ -35,4 +36,5 @@ app.register_blueprint(switch_question_bp)
 app.register_blueprint(game_bp)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
