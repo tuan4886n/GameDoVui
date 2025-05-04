@@ -11,7 +11,9 @@ from routes.start_game import game_bp
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+
+# Configure CORS to allow frontend access to API
+CORS(app, origins=["https://gamedovui.pages.dev"])
 
 @app.route("/test_db", methods=["GET"])
 def test_db():
