@@ -47,7 +47,7 @@ function startGame() {
     gameAreaElement.innerHTML = "<p>Đang tải câu hỏi...</p>";
 
     // Call API to start game
-    fetch("http://127.0.0.1:5000/start_game", {
+    fetch("https://game-api.up.railway.app/start_game", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: currentUsername })
@@ -78,7 +78,7 @@ function startGame() {
 // Load question list from API
 function loadQuiz() {
     console.log("Đang tải câu hỏi...");
-    fetch("http://127.0.0.1:5000/quiz")
+    fetch("https://game-api.up.railway.app/quiz")
     .then(response => response.json())
     .then(data => {
         console.log("Danh sách câu hỏi nhận được:", data.quiz);
@@ -192,7 +192,7 @@ function submitAnswer(questionId, isCorrect) {
 
     const difficulty = "medium"; // Difficulty (temporarily fixed)
 
-    fetch("http://127.0.0.1:5000/submit_score", {
+    fetch("https://game-api.up.railway.app/submit_score", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -263,7 +263,7 @@ function showGameOverScreen(score, difficulty, correct) {
 
     // Submit new score to server via submit_score API
     const username = localStorage.getItem("currentUsername");
-    fetch("http://127.0.0.1:5000/submit_score", {
+    fetch("https://game-api.up.railway.app/submit_score", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username, difficulty: difficulty, correct: correct })
@@ -290,7 +290,7 @@ function showGameOverScreen(score, difficulty, correct) {
 function fetchLeaderboard(page = 1) {
     console.log(`Đang tải bảng xếp hạng cho trang ${page}...`);
 
-    fetch(`http://127.0.0.1:5000/leaderboard?page=${page}`)
+    fetch(`https://game-api.up.railway.app/leaderboard?page=${page}`)
     .then(response => {
         if (!response.ok) throw new Error("Không thể tải bảng xếp hạng từ server.");
         return response.json();
