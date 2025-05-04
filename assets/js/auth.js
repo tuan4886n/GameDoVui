@@ -8,7 +8,7 @@ function registerUser() {
         return;
     }
 
-    fetch("https://game-api.up.railway.app/register", {
+    fetch("https://gamedovui-production.up.railway.app/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username, password: password })
@@ -37,7 +37,7 @@ function loginUser() {
         return;
     }
 
-    fetch("https://game-api.up.railway.app/login", {
+    fetch("https://gamedovui-production.up.railway.app/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username, password: password })

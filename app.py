@@ -14,7 +14,7 @@ import os
 app = Flask(__name__)
 
 # Configure CORS to allow frontend access to API
-CORS(app, origins=["https://gamedovui.pages.dev"], supports_credentials=True, allow_headers=["Content-Type"])
+CORS(app, origins=["https://gamedovui.pages.dev", "https://gamedovui-production.up.railway.app"])
 
 @app.route("/test_db", methods=["GET"])
 def test_db():

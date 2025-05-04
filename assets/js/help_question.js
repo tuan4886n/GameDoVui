@@ -35,7 +35,7 @@ function handle5050Hint() {
     console.log("Trước khi gọi API, remainingAnswers:", remainingAnswers);
 
     // Send a request to the 50/50 help API
-    fetch("https://game-api.up.railway.app/help/50-50", {
+    fetch("https://gamedovui-production.up.railway.app/help/50-50", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ correct_answer: correctAnswer, all_answers: allAnswers })
@@ -126,7 +126,7 @@ function selectExpert(index, correctAnswer, allAnswers) {
     const selectedExpert = experts[index];
 
     // Call phone API to get suggestion
-    fetch("https://game-api.up.railway.app/help/phone", {
+    fetch("https://gamedovui-production.up.railway.app/help/phone", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -239,7 +239,7 @@ function handleAudiencePoll() {
     console.log("Đáp án đúng:", correctAnswer);
 
     // Send API request
-    fetch("https://game-api.up.railway.app/help/audience", {
+    fetch("https://gamedovui-production.up.railway.app/help/audience", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ all_answers: answers, correct_answer: correctAnswer })
@@ -348,7 +348,7 @@ function handleSwitchQuestion() {
         return;
     }
 
-    fetch("https://game-api.up.railway.app/help/switch_question", {
+    fetch("https://gamedovui-production.up.railway.app/help/switch_question", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
