@@ -9,6 +9,11 @@
     <script src="assets/js/help_question.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+        if (!localStorage.getItem("currentUsername")) {
+            window.location.href = "/auth/login.html";  // Go back to login if not logged in
+        }
+    </script>
 </head>
 <body>
     <div id="app">
