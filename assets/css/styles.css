@@ -333,3 +333,19 @@ button:hover {
         transform: scale(1);
     }
 }
+@media (max-width: 768px) {
+  /* Align buttons on mobile */
+  button {
+    font-size: 16px;
+    padding: 14px;
+    width: 100%;
+    display: block;
+    margin: 10px 0;
+  }
+
+  input {
+    font-size: 16px;
+    padding: 12px;
+    width: 100%;
+  }
+}
