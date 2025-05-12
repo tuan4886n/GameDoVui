@@ -13,8 +13,11 @@ import os
 
 app = Flask(__name__)
 
-# Configure CORS to allow frontend access to API
-CORS(app, origins=["https://gamedovui.pages.dev", "https://gamedovui-production.up.railway.app"])
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+@app.route("/")
+def home():
+    return {"message": "✅ Flask API is running!"}
 
 @app.route("/test_db", methods=["GET"])
 def test_db():
@@ -23,6 +26,8 @@ def test_db():
         if conn:
             cursor.execute("SELECT * FROM users;")
             users = cursor.fetchall()
+            cursor.close()
+            conn.close()
             return {"status": "✅ Kết nối PostgreSQL thành công!", "users": users}
         else:
             return {"status": "❌ Kết nối thất bại!"}
@@ -39,5 +44,5 @@ app.register_blueprint(switch_question_bp)
 app.register_blueprint(game_bp)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    debug_mode = os.environ.get("DEBUG", "False") == "True"
+    app.run(host="0.0.0.0", port=5000, debug=debug_mode)
