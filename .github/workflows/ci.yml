@@ -39,14 +39,38 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
 
+      - name: Set up Docker Compose
+        uses: docker/setup-compose-action@v1
+        with:
+          version: latest
+
+      - name: Set environment variables for CI/CD
+        run: |
+          echo "DATABASE_USER=${{ vars.DATABASE_USER }}" >> $GITHUB_ENV
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
+          echo "DATABASE_HOST=${{ vars.DATABASE_HOST }}" >> $GITHUB_ENV
+          echo "DATABASE_NAME=${{ vars.DATABASE_NAME }}" >> $GITHUB_ENV
+          echo "DATABASE_URL=postgresql://${{ vars.DATABASE_USER }}:${{ secrets.DATABASE_PASSWORD }}@${{ vars.DATABASE_HOST }}:5432/${{ vars.DATABASE_NAME }}" >> $GITHUB_ENV
+
       - name: Validate Docker Compose syntax
-        run: docker-compose config
+        run: docker compose config
 
       - name: Start containers
-        run: docker-compose up -d
+        run: docker compose up -d
+
+      - name: Wait for containers to initialize
+        run: sleep 10 # Wait for the database to fully start
 
       - name: Check running containers
         run: docker ps
 
+      - name: Debug DATABASE_URL
+        run: |
+          echo "DATABASE_USER=${DATABASE_USER}"
+          echo "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
+          echo "DATABASE_HOST=${DATABASE_HOST}"
+          echo "DATABASE_NAME=${DATABASE_NAME}"
+          echo "DATABASE_URL=${DATABASE_URL}"
+
       - name: Check Flask API logs
-        run: docker logs flask_api # Check the log to confirm Flask connects to the database correctly
+        run: docker logs flask_api

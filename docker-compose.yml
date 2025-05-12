@@ -20,6 +20,6 @@ services:
     # depends_on:
     #   - db
     environment:
-      DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:5432/${DATABASE_NAME}
+      DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:57236/${DATABASE_NAME}
     ports:
-      - "5000:5000"
+      - "8080:8080"
