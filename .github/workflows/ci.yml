@@ -58,19 +58,17 @@ jobs:
       - name: Start containers
         run: docker compose up -d
 
-      - name: Wait for containers to initialize
-        run: sleep 10 # Wait for the database to fully start
-
-      - name: Check running containers
-        run: docker ps
-
-      - name: Debug DATABASE_URL
+      - name: Wait for database to be ready
         run: |
-          echo "DATABASE_USER=${DATABASE_USER}"
-          echo "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
-          echo "DATABASE_HOST=${DATABASE_HOST}"
-          echo "DATABASE_NAME=${DATABASE_NAME}"
-          echo "DATABASE_URL=${DATABASE_URL}"
+          until nc -z $DATABASE_HOST 57236; do
+            sleep 2
+          done
+
+      - name: Test Flask API response
+        run: curl -X GET http://localhost:8080/health
 
       - name: Check Flask API logs
         run: docker logs flask_api
+
+      - name: Run security check (Bandit)
+        run: bandit -r app/
