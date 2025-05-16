@@ -70,5 +70,8 @@ jobs:
       - name: Check Flask API logs
         run: docker logs flask_api
 
+      - name: Install security tools (Bandit)
+        run: pip install bandit
+
       - name: Run security check (Bandit)
         run: bandit -r app/
