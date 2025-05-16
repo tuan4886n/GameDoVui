@@ -43,6 +43,10 @@ app.register_blueprint(audience_bp)
 app.register_blueprint(switch_question_bp)
 app.register_blueprint(game_bp)
 
+@app.route("/health")
+def health_check():
+    return {"status": "✅ Flask API is running!"}, 200
+
 if __name__ == "__main__":
     debug_mode = os.environ.get("DEBUG", "False") == "True"
-    app.run(host="0.0.0.0", port=5000, debug=debug_mode)
+    app.run(host="0.0.0.0", port=8080, debug=debug_mode)
