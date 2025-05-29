@@ -50,7 +50,8 @@ jobs:
           echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
           echo "DATABASE_HOST=${{ vars.DATABASE_HOST }}" >> $GITHUB_ENV
           echo "DATABASE_NAME=${{ vars.DATABASE_NAME }}" >> $GITHUB_ENV
-          echo "DATABASE_URL=postgresql://${{ vars.DATABASE_USER }}:${{ secrets.DATABASE_PASSWORD }}@${{ vars.DATABASE_HOST }}:5432/${{ vars.DATABASE_NAME }}" >> $GITHUB_ENV
+          echo "DATABASE_PORT=${{ vars.DATABASE_PORT }}" >> $GITHUB_ENV
+          echo "DATABASE_URL=postgresql://${{ vars.DATABASE_USER }}:${{ secrets.DATABASE_PASSWORD }}@${{ vars.DATABASE_HOST }}:${{ vars.DATABASE_PORT }}/${{ vars.DATABASE_NAME }}" >> $GITHUB_ENV
 
       - name: Validate Docker Compose syntax
         run: docker compose config
@@ -58,14 +59,16 @@ jobs:
       - name: Start containers
         run: docker compose up -d
 
-      - name: Wait for database to be ready
+      - name: Kết nối PostgreSQL
         run: |
-          until nc -z $DATABASE_HOST 57236; do
-            sleep 2
-          done
+          export PGPASSWORD="${{ secrets.DATABASE_PASSWORD }}"
+          timeout 60 psql -h $DATABASE_HOST -p $DATABASE_PORT -U $DATABASE_USER -d postgres -c "SELECT 1;"
 
       - name: Test Flask API response
         run: curl -X GET http://localhost:8080/health
+
+      - name: Kiểm tra kết nối PostgreSQL từ Flask
+        run: curl -X GET http://localhost:8080/test_db
 
       - name: Check Flask API logs
         run: docker logs flask_api
@@ -75,3 +78,7 @@ jobs:
 
       - name: Run security check (Bandit)
         run: bandit -r app/
+
+      - name: Cleanup containers
+        if: always()
+        run: docker compose down
