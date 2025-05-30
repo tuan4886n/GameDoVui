@@ -8,7 +8,7 @@ function registerUser() {
         return;
     }
 
-    fetch("http://192.168.1.19:8080/register", {
+    fetch("http://13.228.79.3:8080/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username, password: password })
@@ -37,7 +37,7 @@ function loginUser() {
         return;
     }
 
-    fetch("http://192.168.1.19:8080/login", {
+    fetch("http://13.228.79.3:8080/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username, password: password })
