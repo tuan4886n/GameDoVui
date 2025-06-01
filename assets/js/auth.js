@@ -8,7 +8,7 @@ function registerUser() {
         return;
     }
 
-    fetch("http://13.228.79.3:8080/register", {
+    fetch("https://tuanspace.uk/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username, password: password })
@@ -37,7 +37,7 @@ function loginUser() {
         return;
     }
 
-    fetch("http://13.228.79.3:8080/login", {
+    fetch("https://tuanspace.uk/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username, password: password })

@@ -35,7 +35,7 @@ function handle5050Hint() {
     console.log("Trước khi gọi API, remainingAnswers:", remainingAnswers);
 
     // Send a request to the 50/50 help API
-    fetch("http://13.228.79.3:8080/help/50-50", {
+    fetch("https://tuanspace.uk/help/50-50", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ correct_answer: correctAnswer, all_answers: allAnswers })
@@ -126,7 +126,7 @@ function selectExpert(index, correctAnswer, allAnswers) {
     const selectedExpert = experts[index];
 
     // Call phone API to get suggestion
-    fetch("http://13.228.79.3:8080/help/phone", {
+    fetch("https://tuanspace.uk/help/phone", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -239,7 +239,7 @@ function handleAudiencePoll() {
     console.log("Đáp án đúng:", correctAnswer);
 
     // Send API request
-    fetch("http://13.228.79.3:8080/help/audience", {
+    fetch("https://tuanspace.uk/help/audience", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ all_answers: answers, correct_answer: correctAnswer })
@@ -348,7 +348,7 @@ function handleSwitchQuestion() {
         return;
     }
 
-    fetch("http://13.228.79.3:8080/help/switch_question", {
+    fetch("https://tuanspace.uk/help/switch_question", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
