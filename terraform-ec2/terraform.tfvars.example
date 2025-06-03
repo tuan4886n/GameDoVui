@@ -1,4 +1,0 @@
-aws_region  = your aws region
-instance_id = your instance id
-key_pair    = your key pair
-private_key = your private key

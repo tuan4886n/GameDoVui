@@ -3,10 +3,10 @@ name: Flask CI/CD
 on:
   push:
     branches:
-      - main # Trigger pipeline when there is commit to the "main" branch
+      - cloudflare-deploy # Trigger pipeline when there is commit to the "cloudflare-deploy" branch
   pull_request:
     branches:
-      - main # Trigger pipeline when there is pull request to the "main" branch
+      - cloudflare-deploy # Trigger pipeline when there is pull request to the "cloudflare-deploy" branch
 
 jobs:
   test:
