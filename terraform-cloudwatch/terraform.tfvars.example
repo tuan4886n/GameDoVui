@@ -1,0 +1,3 @@
+aws_region    = your aws region
+instance_id   = your instance id
+sns_topic_arn = your sns topic arn
