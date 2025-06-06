@@ -56,3 +56,37 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   period              = 300                    # Check every 5 minutes (300 seconds)
   alarm_actions       = [var.sns_topic_arn]    # Send warning via SNS
 }
+
+# Create CloudWatch Dashboard to monitor EC2
+resource "aws_cloudwatch_dashboard" "devops_dashboard" {
+  dashboard_name = "DevOps-EC2-Monitoring"
+  dashboard_body = jsonencode({
+    widgets = [
+      {
+        type = "metric",
+        properties = {
+          region = "ap-southeast-1",
+          metrics = [
+            ["AWS/EC2", "CPUUtilization", "InstanceId", "i-05a31932d33ee1803"],
+            ["AWS/EC2", "NetworkIn", "InstanceId", "i-05a31932d33ee1803"],
+            ["AWS/EC2", "NetworkOut", "InstanceId", "i-05a31932d33ee1803"],
+            ["AWS/EC2", "DiskReadOps", "InstanceId", "i-05a31932d33ee1803"],
+            ["AWS/EC2", "DiskWriteOps", "InstanceId", "i-05a31932d33ee1803"]
+          ],
+          title  = "EC2 Metrics Overview",
+          width  = 24,
+          height = 8,
+          period = 300,
+          stat   = "Average"
+        }
+      },
+      {
+        type = "alarm",
+        properties = {
+          title  = "EC2 High CPU Alarm",
+          alarms = ["arn:aws:cloudwatch:ap-southeast-1:029733046349:alarm:EC2-High-CPU"]
+        }
+      }
+    ]
+  })
+}
