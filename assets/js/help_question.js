@@ -1,10 +1,10 @@
 // List of simulator experts with pictures and names
 const experts = [
-    { name: "Dr. Witty Owl", img: "./images/owl.png" },
-    { name: "Professor Cat", img: "./images/cat.png" },
-    { name: "Mr. Foxy Clever", img: "./images/fox.png" },
-    { name: "Ms. Bunny Bright", img: "./images/bunny.png" },
-    { name: "Captain Panda", img: "./images/panda.png" }
+    { name: "Dr. Witty Owl", img: "assets/images/owl.jpg" },
+    { name: "Professor Cat", img: "assets/images/cat.jpg" },
+    { name: "Mr. Foxy Clever", img: "assets/images/fox.jpg" },
+    { name: "Ms. Bunny Bright", img: "assets/images/bunny.jpg" },
+    { name: "Captain Panda", img: "assets/images/panda.jpg" }
 ];
 let expertHint = false; // Expert suggested status check variable
 
@@ -112,8 +112,8 @@ function handlePhoneAFriend() {
             const expertButton = document.createElement("button");
             expertButton.className = "expert-btn";
             expertButton.innerHTML = `
-                <img src="${expert.img || "default-expert.png"}" alt="${expert.name}" class="expert-img">
-                <span>${expert.name}</span>
+                <img src="${expert.img || "default-expert.jpg"}" alt="${expert.name}" class="expert-img">
+                <span id="expert-name">${expert.name}</span>
             `;
             expertButton.onclick = () => selectExpert(index, correctAnswer, answers);
             expertsList.appendChild(expertButton);
