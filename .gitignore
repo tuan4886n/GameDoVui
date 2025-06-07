@@ -10,3 +10,7 @@ terraform-ec2/.terraform/
 terraform-ec2/terraform.tfstate*
 terraform-ec2/terraform.tfvars
 terraform-ec2/.terraform.lock.hcl
+terraform-ec2/
+terraform-cloudwatch/
+README.md
+PROJECT_STRUCTURE.md

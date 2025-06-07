@@ -6,7 +6,7 @@ let currentQuestionIndex = 0; // Current question index
 function startGame() {
     const currentUsername = localStorage.getItem("currentUsername");
 
-    console.log("Đang khởi động trò chơi cho người dùng:", currentUsername);
+    // console.log("Đang khởi động trò chơi cho người dùng:", currentUsername);
 
     if (!currentUsername || currentUsername === "null") {
         alert("Không xác định được username. Vui lòng đăng nhập lại.");
@@ -54,7 +54,7 @@ function startGame() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log("Phản hồi từ API:", data);
+        // console.log("Phản hồi từ API:", data);
 
         if (!data || typeof data.total_sessions === "undefined" || typeof data.current_game_score === "undefined") {
             console.error("Phản hồi không hợp lệ từ API:", data);
@@ -77,11 +77,11 @@ function startGame() {
 
 // Load question list from API
 function loadQuiz() {
-    console.log("Đang tải câu hỏi...");
+    // console.log("Đang tải câu hỏi...");
     fetch("https://tuanspace.uk/quiz")
     .then(response => response.json())
     .then(data => {
-        console.log("Danh sách câu hỏi nhận được:", data.quiz);
+        // console.log("Danh sách câu hỏi nhận được:", data.quiz);
 
         if (!data.quiz || !Array.isArray(data.quiz) || data.quiz.length === 0) {
             document.getElementById("game-area").innerHTML = "<p>Không có câu hỏi nào được tải.</p>";
@@ -102,7 +102,7 @@ function loadQuiz() {
 function displayQuestion() {
     // Reset remainingAnswers to prepare for new questions
     remainingAnswers = [];
-    console.log("remainingAnswers đã được reset:", remainingAnswers);
+    // console.log("remainingAnswers đã được reset:", remainingAnswers);
 
     // Check if all questions are completed
     if (currentQuestionIndex >= questions.length) {
@@ -174,7 +174,7 @@ function displayQuestion() {
 function submitAnswer(questionId, isCorrect) {
     const currentUsername = localStorage.getItem("currentUsername");
 
-    console.log("Gửi câu trả lời cho câu hỏi:", questionId, "Đúng:", isCorrect);
+    // console.log("Gửi câu trả lời cho câu hỏi:", questionId, "Đúng:", isCorrect);
 
     // Check username
     if (!currentUsername || currentUsername === "null") {
@@ -206,7 +206,7 @@ function submitAnswer(questionId, isCorrect) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log("Phản hồi từ API /submit_score:", data);
+        // console.log("Phản hồi từ API /submit_score:", data);
 
         if (!data || typeof data.current_game_score === "undefined" || typeof data.highest_score === "undefined") {
             console.error("Dữ liệu không hợp lệ từ API /submit_score:", data);
@@ -273,7 +273,7 @@ function showGameOverScreen(score, difficulty, correct) {
         return response.json();
     })
     .then(data => {
-        console.log("Điểm số đã được gửi thành công:", data);
+        // console.log("Điểm số đã được gửi thành công:", data);
 
         // Refresh the leaderboard immediately after the score is updated
         fetchLeaderboard();
@@ -288,7 +288,7 @@ function showGameOverScreen(score, difficulty, correct) {
 
 // Download leaderboard data
 function fetchLeaderboard(page = 1) {
-    console.log(`Đang tải bảng xếp hạng cho trang ${page}...`);
+    // console.log(`Đang tải bảng xếp hạng cho trang ${page}...`);
 
     fetch(`https://tuanspace.uk/leaderboard?page=${page}`)
     .then(response => {
@@ -296,7 +296,7 @@ function fetchLeaderboard(page = 1) {
         return response.json();
     })
     .then(data => {
-        console.log("Dữ liệu bảng xếp hạng nhận được:", data);
+        // console.log("Dữ liệu bảng xếp hạng nhận được:", data);
 
         const leaderboardList = document.getElementById("leaderboard-list");
         if (!leaderboardList) {

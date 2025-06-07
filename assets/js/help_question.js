@@ -17,7 +17,7 @@ function handle5050Hint() {
         hint50Button.style.visibility = "hidden"; // Hide help button after pressing
     }
 
-    console.log("Đang sử dụng trợ giúp 50/50...");
+    // console.log("Đang sử dụng trợ giúp 50/50...");
 
     // Find the correct answer button
     const correctAnswerElement = Array.from(document.querySelectorAll(".answer-btn")).find(answer =>
@@ -32,7 +32,7 @@ function handle5050Hint() {
     // Get all answers from DOM
     const allAnswers = Array.from(document.querySelectorAll(".answer-btn")).map(answer => answer.textContent);
 
-    console.log("Trước khi gọi API, remainingAnswers:", remainingAnswers);
+    // console.log("Trước khi gọi API, remainingAnswers:", remainingAnswers);
 
     // Send a request to the 50/50 help API
     fetch("https://tuanspace.uk/help/50-50", {
@@ -43,11 +43,11 @@ function handle5050Hint() {
     .then(response => response.json())
     .then(data => {
         const remainingChoices = data.remaining_choices;
-        console.log("Phản hồi từ API, remainingChoices:", remainingChoices);
+        // console.log("Phản hồi từ API, remainingChoices:", remainingChoices);
 
         // Update remainingAnswers
         remainingAnswers = remainingChoices;
-        console.log("Sau khi gọi API và cập nhật, remainingAnswers:", remainingAnswers);
+        // console.log("Sau khi gọi API và cập nhật, remainingAnswers:", remainingAnswers);
 
         // Hide answers that are not in the remaining list
         const answers = document.querySelectorAll(".answer-btn");
@@ -58,7 +58,7 @@ function handle5050Hint() {
         });
 
         document.querySelectorAll(".answer-btn").forEach(answer => {
-            console.log(`Đáp án "${answer.textContent}" trạng thái:`, answer.style.visibility);
+            // console.log(`Đáp án "${answer.textContent}" trạng thái:`, answer.style.visibility);
         });
     })
     .catch(error => {
@@ -77,14 +77,14 @@ function handlePhoneAFriend() {
         hintPhoneButton.disabled = true; // Vô hiệu hóa nút
     }
 
-    console.log("Đang sử dụng trợ giúp Chuyên gia...");
+    // console.log("Đang sử dụng trợ giúp Chuyên gia...");
 
     // Get a list of answers to suggest (preferably from `remainingAnswers` if available)
     const answers = remainingAnswers.length > 0 
         ? remainingAnswers 
         : Array.from(document.querySelectorAll(".answer-btn")).map(answer => answer.textContent);
 
-    console.log("Trước khi gọi Chuyên gia, remainingAnswers:", remainingAnswers);
+    // console.log("Trước khi gọi Chuyên gia, remainingAnswers:", remainingAnswers);
 
     // Find the correct answer from DOM
     const correctAnswerElement = Array.from(document.querySelectorAll(".answer-btn")).find(answer =>
@@ -96,8 +96,8 @@ function handlePhoneAFriend() {
     }
     const correctAnswer = correctAnswerElement.textContent;
 
-    console.log("Tất cả đáp án để gợi ý:", answers);
-    console.log("Đáp án đúng:", correctAnswer);
+    // console.log("Tất cả đáp án để gợi ý:", answers);
+    // console.log("Đáp án đúng:", correctAnswer);
 
     // Displays the container containing the list of experts
     const phoneContainer = document.getElementById("phone-a-friend-container");
@@ -216,14 +216,14 @@ function handleAudiencePoll() {
     }
     isFetching = true; // Set processing status
 
-    console.log("Hàm handleAudiencePoll được gọi.");
+    // console.log("Hàm handleAudiencePoll được gọi.");
 
     // Get the answer list from `remainingAnswers` if available, otherwise use the entire DOM
     const answers = remainingAnswers.length > 0 
         ? remainingAnswers 
         : Array.from(document.querySelectorAll(".answer-btn")).map(answer => answer.textContent);
 
-    console.log("Danh sách đáp án sử dụng:", answers);
+    // console.log("Danh sách đáp án sử dụng:", answers);
 
     // Find the correct answer from DOM
     const correctAnswerElement = Array.from(document.querySelectorAll(".answer-btn")).find(answer =>
@@ -236,7 +236,7 @@ function handleAudiencePoll() {
     }
     const correctAnswer = correctAnswerElement.textContent;
 
-    console.log("Đáp án đúng:", correctAnswer);
+    // console.log("Đáp án đúng:", correctAnswer);
 
     // Send API request
     fetch("https://tuanspace.uk/help/audience", {
@@ -246,7 +246,7 @@ function handleAudiencePoll() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log("Phản hồi API:", data);
+        // console.log("Phản hồi API:", data);
 
         if (!data.poll) {
             console.error("Phản hồi API không hợp lệ:", data);
@@ -288,7 +288,7 @@ function handleAudiencePoll() {
             }
         });
 
-        console.log("Biểu đồ mới đã được vẽ thành công.");
+        // console.log("Biểu đồ mới đã được vẽ thành công.");
 
         // Disable "Help Audience" button after use
         const hintAudienceButton = document.getElementById("hint-audience");
@@ -319,7 +319,7 @@ function resetAudiencePoll() {
         window.myChart = null;
     }
 
-    console.log("Đã reset container và biểu đồ.");
+    // console.log("Đã reset container và biểu đồ.");
 }
 
 let skipHintUsed = false; // Declare global variable
@@ -328,11 +328,11 @@ let skipHintUsed = false; // Declare global variable
 function handleSwitchQuestion() {
     // Check if help has been used before
     if (skipHintUsed) {
-        console.log("Trợ giúp Đổi câu hỏi đã được sử dụng! Không thể sử dụng lại.");
+        // console.log("Trợ giúp Đổi câu hỏi đã được sử dụng! Không thể sử dụng lại.");
         return; // Prevent players from reusing
     }
 
-    console.log("Đang đổi câu hỏi...");
+    // console.log("Đang đổi câu hỏi...");
     skipHintUsed = true; // Mark that help has been used
 
     // Disable the "Change Question" button
@@ -364,7 +364,7 @@ function handleSwitchQuestion() {
             return;
         }
 
-        console.log("Câu hỏi mới từ API:", data.new_question);
+        // console.log("Câu hỏi mới từ API:", data.new_question);
 
         // Convert format before updating question list
         const formattedQuestion = {
@@ -379,7 +379,7 @@ function handleSwitchQuestion() {
         // Replace the current question in the list
         questions.splice(currentQuestionIndex, 1, formattedQuestion);
 
-        console.log("Danh sách câu hỏi sau khi cập nhật:", questions);
+        // console.log("Danh sách câu hỏi sau khi cập nhật:", questions);
 
         // Show new questions
         displayQuestion();
