@@ -190,6 +190,12 @@ function submitAnswer(questionId, isCorrect) {
         return;
     }
 
+    // Hide the expert list when the player submits the answerAdd commentMore actions
+    const phoneContainer = document.getElementById("phone-a-friend-container");
+    if (phoneContainer && phoneContainer.style.display !== "none") {
+        phoneContainer.style.display = "none";
+    }
+    
     const difficulty = "medium"; // Difficulty (temporarily fixed)
 
     fetch("https://tuanspace.uk/submit_score", {

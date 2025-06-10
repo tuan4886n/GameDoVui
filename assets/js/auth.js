@@ -17,6 +17,9 @@ function registerUser() {
     .then(data => {
         if (data.status.includes("✅")) {
             showNotification("Đăng ký thành công!");
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1000);
         } else {
             showNotification(data.status || "Có lỗi xảy ra. Vui lòng thử lại.", false);
         }
