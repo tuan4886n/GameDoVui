@@ -1,10 +1,10 @@
 // List of simulator experts with pictures and names
 const experts = [
-    { name: "Dr. Witty Owl", img: "./images/owl.jpg" },
-    { name: "Professor Cat", img: "./images/cat.jpg" },
-    { name: "Mr. Foxy Clever", img: "./images/fox.jpg" },
-    { name: "Ms. Bunny Bright", img: "./images/bunny.jpg" },
-    { name: "Captain Panda", img: "./images/panda.jpg" }
+    { name: "Dr. Witty Owl", img: "assets/images/owl.jpg" },
+    { name: "Professor Cat", img: "assets/images/cat.jpg" },
+    { name: "Mr. Foxy Clever", img: "assets/images/fox.jpg" },
+    { name: "Ms. Bunny Bright", img: "assets/images/bunny.jpg" },
+    { name: "Captain Panda", img: "assets/images/panda.jpg" }
 ];
 let expertHint = false; // Expert suggested status check variable
 
