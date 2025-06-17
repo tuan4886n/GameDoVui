@@ -1,19 +1,25 @@
 variable "aws_region" {
-  description = "AWS region where EC2 is running"
+  description = "AWS Region"
   type        = string
 }
 
-variable "instance_id" {
-  description = "Instance ID EC2 "
+variable "ami_id" {
+  description = "AMI ID (Amazon Linux 2)"
+  type        = string
+  default     = "ami-0fa377108253bf620" # ap-southeast-1
+}
+
+variable "subnet_id" {
+  description = "Subnet ID để gán EC2"
+  type        = string
+}
+
+variable "sg_id" {
+  description = "Security Group đã được tạo sẵn"
   type        = string
 }
 
 variable "key_pair" {
-  description = "Key Pair Name to SSH connect EC2"
-  type        = string
-}
-
-variable "private_key" {
-  description = "Private key for SSH"
+  description = "Tên Key Pair EC2"
   type        = string
 }

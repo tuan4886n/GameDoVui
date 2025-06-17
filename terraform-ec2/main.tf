@@ -7,25 +7,16 @@ terraform {
   }
 }
 
-data "aws_instance" "flask_server" {
-  instance_id = var.instance_id
-}
+resource "aws_instance" "flask_server" {
+  ami                         = var.ami_id
+  instance_type               = "t2.micro"
+  subnet_id                   = var.subnet_id
+  vpc_security_group_ids      = [var.sg_id]
+  key_name                    = var.key_pair
+  associate_public_ip_address = true
 
-resource "null_resource" "deploy_flask" {
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    private_key = var.private_key
-    host        = data.aws_instance.flask_server.public_ip
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "docker stop flask-api || true",
-      "docker rm flask-api || true",
-      "docker rmi $(docker images -q tuan4886/flask-api) || true",
-      "docker pull tuan4886/flask-api:latest",
-      "docker run -d --name flask-api --env-file /home/ec2-user/.env -p 8080:8080 tuan4886/flask-api:latest"
-    ]
+  tags = {
+    Name = "FlaskServer"
   }
 }
+
