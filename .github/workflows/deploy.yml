@@ -1,0 +1,44 @@
+name: Deploy Flask API Infrastructure
+
+on:
+  workflow_run:
+    workflows: ["Flask CI/CD"] # Run only after CI Flask API completes
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker Image
+        run: docker build -t tuan4886/flask-api:latest .
+
+      - name: Push Docker Image
+        run: docker push tuan4886/flask-api:latest
+
+      # Deploy to EC2
+      - name: Create PEM file from secret
+        run: |
+          echo "${{ secrets.PEM_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Copy docker-compose.yml and .env to EC2
+        run: |
+          ssh -i key.pem -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_IP }} "mkdir -p ~/flask-app"
+          scp -i key.pem -o StrictHostKeyChecking=no docker-compose.yml .env ec2-user@${{ secrets.EC2_IP }}:~/flask-app/
+
+      - name: Deploy via SSH
+        run: |
+          ssh -i key.pem -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_IP }} << 'EOF'
+            cd ~/flask-app
+            docker-compose pull
+            docker-compose down
+            docker-compose up -d
+          EOF
