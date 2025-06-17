@@ -1,6 +1,9 @@
 name: Deploy Flask API Infrastructure
 
 on:
+  push:
+    branches:
+      - dev
   workflow_run:
     workflows: ["Flask CI/CD"] # Run only after CI Flask API completes
     types:

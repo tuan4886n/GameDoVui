@@ -1,0 +1,9 @@
+services:
+  flask_api:
+    image: tuan4886/flask-api:latest
+    container_name: flask_api
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
+    ports:
+      - "8080:8080"
