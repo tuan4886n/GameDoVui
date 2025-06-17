@@ -1,5 +1,6 @@
 __pycache__/
 .env
+deploy.env
 test_connection.py
 create_scores_table.py
 terraform.tfvars
