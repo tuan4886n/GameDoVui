@@ -6,11 +6,11 @@ terraform.tfvars
 *.pem
 *.key
 *.log
-terraform-ec2/.terraform/
+terraform-ec2/.terraform/provider*
 terraform-ec2/terraform.tfstate*
 terraform-ec2/terraform.tfvars
 terraform-ec2/.terraform.lock.hcl
-terraform-cloudwatch/.terraform/
+terraform-cloudwatch/.terraform/provider*
 terraform-cloudwatch/terraform.tfstate*
 terraform-cloudwatch/terraform.tfvars
 terraform-cloudwatch/.terraform.lock.hcl
