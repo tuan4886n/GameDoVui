@@ -3,8 +3,6 @@ services:
     image: tuan4886/flask-api:latest
     container_name: flask_api
     restart: always
-    env_file:
-      - .env
     environment:
       DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
     ports:

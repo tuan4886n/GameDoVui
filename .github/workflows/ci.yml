@@ -54,10 +54,10 @@ jobs:
           echo "DATABASE_URL=postgresql://${{ vars.DATABASE_USER }}:${{ secrets.DATABASE_PASSWORD }}@${{ vars.DATABASE_HOST }}:${{ vars.DATABASE_PORT }}/${{ vars.DATABASE_NAME }}" >> $GITHUB_ENV
 
       - name: Validate Docker Compose syntax
-        run: docker compose config
+        run: docker compose -f docker-compose.override.yml config
 
       - name: Start containers
-        run: docker compose up -d
+        run: docker compose -f docker-compose.override.yml up -d
 
       - name: Kết nối PostgreSQL
         run: |
@@ -81,4 +81,4 @@ jobs:
 
       - name: Cleanup containers
         if: always()
-        run: docker compose down
+        run: docker compose -f docker-compose.override.yml down

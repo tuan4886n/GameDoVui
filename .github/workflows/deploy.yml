@@ -23,28 +23,30 @@ jobs:
       - name: Push Docker Image
         run: docker push tuan4886/flask-api:latest
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Create terraform.tfvars
+      - name: Create PEM file from secret
         run: |
-          echo "aws_region=\"${{ secrets.AWS_REGION }}\"" >> terraform.tfvars
-          echo "instance_id=\"${{ secrets.INSTANCE_ID }}\"" >> terraform.tfvars
-          echo "key_pair=\"${{ secrets.KEY_PAIR_NAME }}\"" >> terraform.tfvars
-          echo "private_key=\"${{ secrets.PRIVATE_KEY }}\"" >> terraform.tfvars
-        working-directory: ./terraform-ec2
+          echo "${{ secrets.PEM_KEY_PATH }}" > key.pem
+          chmod 600 key.pem
 
-      - name: Terraform Init
-        run: terraform init
-        working-directory: ./terraform-ec2
+      - name: Create .env file
+        run: |
+          echo "DATABASE_USER=${{ vars.DATABASE_USER }}" >> .env
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env
+          echo "DATABASE_HOST=${{ vars.DATABASE_HOST }}" >> .env
+          echo "DATABASE_NAME=${{ vars.DATABASE_NAME }}" >> .env
+          echo "DATABASE_PORT=${{ vars.DATABASE_PORT }}" >> .env
+          echo "DATABASE_URL=postgresql://${{ vars.DATABASE_USER }}:${{ secrets.DATABASE_PASSWORD }}@${{ vars.DATABASE_HOST }}:${{ vars.DATABASE_PORT }}/${{ vars.DATABASE_NAME }}" >> .env
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve -parallelism=1
-        working-directory: ./terraform-ec2
+      - name: Copy docker-compose.yml and .env to EC2
+        run: |
+          ssh -i key.pem -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_IP }} "mkdir -p ~/flask-app"
+          scp -i key.pem -o StrictHostKeyChecking=no docker-compose.yml .env ec2-user@${{ secrets.EC2_IP }}:~/flask-app/
+
+      - name: Deploy via SSH
+        run: |
+          ssh -i key.pem -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_IP }} << 'EOF'
+            cd ~/flask-app
+            docker-compose pull
+            docker-compose down
+            docker-compose up -d
+          EOF

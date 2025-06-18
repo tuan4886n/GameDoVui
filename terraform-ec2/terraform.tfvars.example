@@ -1,4 +1,4 @@
-aws_region  = your aws region
-instance_id = your instance id
-key_pair    = your key pair
-private_key = your private key
+aws_region = "your aws region"
+subnet_id  = "your subnet id"
+sg_id      = "your sercurity group id"
+key_pair   = "your key pair"
