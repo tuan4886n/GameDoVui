@@ -21,8 +21,9 @@ This project is more than just a game—it applies **DevOps principles** to opti
 ### ✅ **Project Objectives**
 
 - **Build a complete system** applying DevOps best practices.
-- **Automate deployment** using Terraform for easy cloud infrastructure management (EC2 & database).
 - **CI/CD pipeline** with GitHub Actions to test, build Docker containers, and deploy the API.
+- **Automate infrastructure provisioning** using Terraform for easy cloud infrastructure management
+- **Automate application deployment** to EC2 using Bash scripting.
 - **Monitor system performance** using AWS CloudWatch to track EC2 health.
 - **Containerize backend Flask API**, supporting scalability.
 - **Connect frontend with backend** via Cloudflare Pages for speed and security.
@@ -41,9 +42,10 @@ This project is more than just a game—it applies **DevOps principles** to opti
 - **CI/CD:** GitHub Actions for automated testing & deployment
 - **Infrastructure:** AWS EC2 (Hosting Flask API backend)
 - **Monitoring:** AWS CloudWatch to track EC2 performance
+- **Deployment Scripting:** Bash Scripting (ssh-deploy.sh) for automated EC2 application deployment
 - **Containerization:** Dockerized Flask API backend
 - **Kubernetes (K3s):** Successfully deployed locally, scalable to cloud environments
-- **Infrastructure as Code (IaC):** Terraform manages AWS EC2 infrastructure, Supabase database, and CloudWatch monitoring
+- **Infrastructure as Code (IaC):** Terraform provisions AWS EC2 infrastructure, and CloudWatch monitoring
 
 📌 **Screenshots**  
 🔥 (Add gameplay screenshots here)
@@ -56,7 +58,8 @@ Projects are organized into separate folders for easy management:
 
 - **Backend**: Flask API handles game logic.
 - **Frontend**: JavaScript, HTML, CSS interface.
-- **CI/CD & Infrastructure**: GitHub Actions for automated testing & deployment.
+- **Infrastructure**: Configuration files for provisioning AWS infrastructure.
+- **CI/CD & Deployment**: GitHub Actions for automated testing & deployment.
 - **Kubernetes**: Configuration files to deploy backend on K3s.
 
 🔥 **More details 👉 [`PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md)**
@@ -86,7 +89,7 @@ DATABASE_NAME=your_database
 The CI/CD system utilizes **GitHub Actions**, including:
 
 - **ci.yml** – Performs code validation, security checks, builds containers, verifies database connections, and tests APIs.
-- **deploy.yml** – Manages server deployment, pushes Docker image to Docker Hub, and provisions AWS EC2 for the Flask backend.
+- **deploy.yml** – Manages server deployment by building and pushing the Docker image, then executing update the Flask backend on AWS EC2.
 
 ### ✅ **Deployment Process:**
 
@@ -95,9 +98,9 @@ The CI/CD system utilizes **GitHub Actions**, including:
 - The workflow **logs into Docker Hub**, **builds the Flask API image**, and **pushes it to Docker Hub** (`tuan4886/flask-api:latest`).
   🔗 **Docker Hub Image:** [tuan4886/flask-api:latest](https://hub.docker.com/r/tuan4886/flask-api)
 
-2️⃣ **Provision AWS EC2:**
+2️⃣ **Deploy Application to AWS EC2:**
 
-- Terraform applies infrastructure changes, ensuring the backend is deployed properly.
+- After the EC2 is ready, this process will automatically SSH into the EC2 to pull and update the Flask backend via Docker Compose.
 
 🔥 **For more details, check the `.github/workflows/` directory.**
 
@@ -144,13 +147,25 @@ docker-compose up -d
 
 ### ✅ **Provision AWS Infrastructure with Terraform**
 
-Execute Terraform to set up **AWS EC2 for the Flask backend** (frontend is hosted separately):
+Execute Terraform to **provision** the **AWS EC2** resources for the Flask backend (frontend is hosted separately):
 
 ```bash
 terraform apply -auto-approve
 ```
 
-🔹 Once deployment is complete, the API will be accessible at: `http://your-ec2-ip:8080`.
+🔹 Once the infrastructure is provisioned, you can proceed to deploy the application using the Bash deployment script.
+
+### ✅ **Deploy Application to EC2 (Using Bash Script)**
+
+Use the ssh-deploy.sh script to automatically deploy the Flask API to your provisioned EC2 instance. Ensure the necessary environment variables are set:
+
+```bash
+export EC2_IP="<YOUR_EC2_IP>"
+export PEM_KEY_PATH="<YOUR_KEY_PEM_FILE>"
+bash ssh-deploy.sh
+```
+
+🔹 After deployment is complete, the API will be accessible at: `http://your-ec2-public-ip:8080`
 
 ## 🏗️ Kubernetes Deployment
 

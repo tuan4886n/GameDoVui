@@ -17,3 +17,4 @@ C:.
 ├── terraform-cloudwatch/ # Terraform sets up resource monitoring with AWS CloudWatch
 ├── terraform-ec2/ # Terraform manages AWS EC2 infrastructure automatically
 ├── tests/ # Unit tests, testing API with pytest
+├── ssh-deploy.sh # automation deploy
